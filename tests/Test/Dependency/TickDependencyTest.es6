@@ -40,4 +40,19 @@ describe( 'TickDependency', () => {
 
     } );
 
+    it( 'can be fulfilled manually before vm.$nextTick()', async () => {
+
+        const vm = new Vue();
+
+        const dependency = new TickDependency( 'test', vm );
+        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        // Fulfil manually.
+        dependency.fulfil( vm );
+
+        Assert.Dependency.assertFulfilled( dependency, vm );
+        await Assert.Promise.assertResolved( dependency.promise, vm );
+
+    } );
+
 } );

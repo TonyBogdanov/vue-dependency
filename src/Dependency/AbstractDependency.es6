@@ -86,18 +86,6 @@ export default class AbstractDependency {
 
         if ( null !== this.state ) {
 
-            /* debug:start */
-            if ( true === this.state ) {
-
-                throw `${ this.constructor.name } was already fulfilled.`;
-
-            } else if ( false === this.state ) {
-
-                throw `${ this.constructor.name } has failed.`;
-
-            }
-            /* debug:end */
-
             return this;
 
         }
@@ -117,18 +105,6 @@ export default class AbstractDependency {
     fail( value ) {
 
         if ( null !== this.state ) {
-
-            /* dev:start */
-            if ( true === this.state ) {
-
-                throw `${ this.constructor.name } was fulfilled.`;
-
-            } else if ( false === this.state ) {
-
-                throw `${ this.constructor.name } has already failed.`;
-
-            }
-            /* dev:end */
 
             return this;
 

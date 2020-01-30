@@ -34,4 +34,17 @@ describe( 'FrameDependency', () => {
 
     } );
 
+    it( 'can be fulfilled manually before the next frame', async () => {
+
+        const dependency = new FrameDependency( 'test' );
+        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        // Fulfil manually.
+        dependency.fulfil( '__raf__' );
+
+        Assert.Dependency.assertFulfilled( dependency, '__raf__' );
+        await Assert.Promise.assertResolved( dependency.promise, '__raf__' );
+
+    } );
+
 } );

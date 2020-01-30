@@ -80,4 +80,30 @@ describe( 'PollDependency', () => {
 
     } );
 
+    it( 'can be fulfilled manually before the poll function', async () => {
+
+        const dependency = new PollDependency( 'test', createPoll( 1 ), false );
+        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        // Fulfil manually.
+        dependency.fulfil( 'fulfil' );
+
+        Assert.Dependency.assertFulfilled( dependency );
+        await Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
+
+    } );
+
+    it( 'can be failed manually before the poll function', async () => {
+
+        const dependency = new PollDependency( 'test', createError( 1 ), false );
+        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        // Fail manually.
+        dependency.fail( 'fail' );
+
+        Assert.Dependency.assertFailed( dependency );
+        await Assert.Promise.assertRejected( dependency.promise, 'fail' );
+
+    } );
+
 } );

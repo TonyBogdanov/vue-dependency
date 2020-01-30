@@ -28,39 +28,53 @@ export default class DependencyAssert {
 
     static assertFulfilled( dependency, reason = 'fulfil' ) {
 
-        expect( dependency.state, 'state' ).to.be['true'];
-        expect( dependency.value, 'value' ).to.equal( reason );
+        const assert = ( retry = false ) => {
 
-        expect( dependency._resolvers, '_resolvers' ).to.be.an( 'array' ).that.is.empty;
-        expect( dependency._rejectors, '_rejectors' ).to.be.an( 'array' ).that.is.empty;
+            expect( dependency.state, `state${ retry ? ' (retry)' : '' }` ).to.be['true'];
+            expect( dependency.value, `value${ retry ? ' (retry)' : '' }` ).to.equal( reason );
 
-        expect( dependency.fulfilled, 'fulfilled' ).to.be['true'];
-        expect( dependency.failed, 'failed' ).to.be['false'];
+            expect( dependency._resolvers, `_resolvers${ retry ? ' (retry)' : '' }` ).to.be.an( 'array' ).that.is.empty;
+            expect( dependency._rejectors, `_rejectors${ retry ? ' (retry)' : '' }` ).to.be.an( 'array' ).that.is.empty;
 
-        expect( dependency.pending, 'pending' ).to.be['false'];
+            expect( dependency.fulfilled, `fulfilled${ retry ? ' (retry)' : '' }` ).to.be['true'];
+            expect( dependency.failed, `failed${ retry ? ' (retry)' : '' }` ).to.be['false'];
 
-        // No further fulfilment / failure allowed.
-        expect( () => dependency.fulfil( 'error' ), 'post-fulfil' ).to.throw();
-        expect( () => dependency.fail( 'error' ), 'post-fail' ).to.throw();
+            expect( dependency.pending, `pending${ retry ? ' (retry)' : '' }` ).to.be['false'];
+
+        };
+
+        // Further fulfilment / failure has no effect.
+        expect( dependency.fulfil( 'further' ), 'post-fulfil' ).to.equal( dependency );
+        assert( true );
+
+        expect( dependency.fail( 'further' ), 'post-fail' ).to.equal( dependency );
+        assert( true );
 
     }
 
     static assertFailed( dependency, reason = 'fail' ) {
 
-        expect( dependency.state, 'state' ).to.be['false'];
-        expect( dependency.value, 'value' ).to.equal( reason );
+        const assert = ( retry = false ) => {
 
-        expect( dependency._resolvers, '_resolvers' ).to.be.an( 'array' ).that.is.empty;
-        expect( dependency._rejectors, '_rejectors' ).to.be.an( 'array' ).that.is.empty;
+            expect( dependency.state, `state${ retry ? ' (retry)' : '' }` ).to.be['false'];
+            expect( dependency.value, `value${ retry ? ' (retry)' : '' }` ).to.equal( reason );
 
-        expect( dependency.fulfilled, 'fulfilled' ).to.be['false'];
-        expect( dependency.failed, 'failed' ).to.be['true'];
+            expect( dependency._resolvers, `_resolvers${ retry ? ' (retry)' : '' }` ).to.be.an( 'array' ).that.is.empty;
+            expect( dependency._rejectors, `_rejectors${ retry ? ' (retry)' : '' }` ).to.be.an( 'array' ).that.is.empty;
 
-        expect( dependency.pending, 'pending' ).to.be['false'];
+            expect( dependency.fulfilled, `fulfilled${ retry ? ' (retry)' : '' }` ).to.be['false'];
+            expect( dependency.failed, `failed${ retry ? ' (retry)' : '' }` ).to.be['true'];
 
-        // No further fulfilment / failure allowed.
-        expect( () => dependency.fulfil( 'error' ), 'post-fulfil' ).to.throw();
-        expect( () => dependency.fail( 'error' ), 'post-fail' ).to.throw();
+            expect( dependency.pending, `pending${ retry ? ' (retry)' : '' }` ).to.be['false'];
+
+        };
+
+        // Further fulfilment / failure has no effect.
+        expect( dependency.fulfil( 'further' ), 'post-fulfil' ).to.equal( dependency );
+        assert( true );
+
+        expect( dependency.fail( 'further' ), 'post-fail' ).to.equal( dependency );
+        assert( true );
 
     }
 
