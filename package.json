@@ -16,19 +16,24 @@
     "url": "https://github.com/TonyBogdanov/vue-dependency/issues"
   },
   "homepage": "https://github.com/TonyBogdanov/vue-dependency#readme",
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/register": "^7.8.3",
     "@babel/runtime": "^7.8.3",
+    "@vue/test-utils": "^1.0.0-beta.31",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "jsdom": "^16.0.1",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^7.0.1",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {
     "data-expectation": "^1.0.20",
     "data-types-js": "^1.0.0",
-    "jsdom": "^16.0.1",
-    "mocha": "^7.0.1",
     "vue": "^2.6.11"
   }
 }

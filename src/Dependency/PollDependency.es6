@@ -20,14 +20,21 @@ import AbstractDependency from './AbstractDependency';
  *
  * This can be useful when your dependency relies on the return value of a function you can afford to be called
  * numerous times. When possible, prefer PromiseDependency over this one for performance considerations.
+ *
+ * NOTE: The specified interval & limit of polls will be-recalculated to never exceed 20 seconds of total polling time.
  */
 export default class PollDependency extends AbstractDependency {
 
     static type = 'poll';
 
-    constructor( name, callback, falsyValue, interval = 1 ) {
+    constructor( name, callback, falsyValue, interval = 1, limit = 20000 ) {
 
-        let resolve, reject;
+        interval = Math.min( interval, 20000 );
+
+        let resolve,
+            reject,
+            polls = Math.round( Math.min( limit * interval, 20000 ) / interval );
+
         const poll = () => {
 
             try {
@@ -35,7 +42,13 @@ export default class PollDependency extends AbstractDependency {
                 const value = callback();
                 if ( value === falsyValue ) {
 
-                    return setTimeout( poll, interval );
+                    if ( 0 < --polls ) {
+
+                        setTimeout( poll, interval );
+
+                    }
+
+                    return;
 
                 }
 

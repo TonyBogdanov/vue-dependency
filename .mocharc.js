@@ -5,6 +5,9 @@
  * file that was distributed with this source code.
  */
 
+// Mock DOM.
+require( 'jsdom-global' )();
+
 // Disable debug logging.
 console.debug = () => {};
 

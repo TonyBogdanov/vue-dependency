@@ -28,7 +28,7 @@ export default class RefDependency extends AbstractDependency {
 
     static type = 'ref';
 
-    constructor( name, component, ref ) {
+    constructor( name, component, ref, pollInterval = 1, pollLimit = 20000 ) {
 
         super( name, new PollDependency( name, () => {
 
@@ -41,7 +41,7 @@ export default class RefDependency extends AbstractDependency {
             const element = component.$refs[ ref ];
             return isArray( element ) ? element[0] : element; // $refs cans be an array when in v-for.
 
-        }, false ).promise );
+        }, false, pollInterval, pollLimit ).promise );
 
     }
 
