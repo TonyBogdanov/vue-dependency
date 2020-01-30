@@ -22,4 +22,33 @@ export default class Util {
 
     }
 
+    /**
+     * Returns a promise that resolves at the next browser frame with the specified value (or whatever
+     * requestAnimationFrame returns if value is undefined).
+     *
+     * @param value
+     * @returns {Promise<unknown>}
+     */
+    static frame( value ) {
+
+        return new Promise( resolve => requestAnimationFrame( 'undefined' === typeof value ?
+            resolve : () => resolve( value ) ) );
+
+    }
+
+    /**
+     * Returns a promise that resolves at Vue.$nextTick() with the specified value (or whatever Vue.$nextTick() returns
+     * if value is undefined).
+     *
+     * @param vm
+     * @param value
+     * @returns {Promise<unknown>}
+     */
+    static tick( vm, value ) {
+
+        return new Promise( resolve => vm.$nextTick( 'undefined' === typeof value ?
+            resolve : () => resolve( value ) ) );
+
+    }
+
 }
