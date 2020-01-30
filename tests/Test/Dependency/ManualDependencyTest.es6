@@ -30,7 +30,7 @@ describe( 'ManualDependency', () => {
         dependency.fulfil( 'fulfil' );
 
         Assert.Dependency.assertFulfilled( dependency );
-        await Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
+        Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
 
     } );
 
@@ -43,7 +43,7 @@ describe( 'ManualDependency', () => {
         dependency.fail( 'fail' );
 
         Assert.Dependency.assertFailed( dependency );
-        await Assert.Promise.assertRejected( dependency.promise, 'fail' );
+        Assert.Promise.assertRejected( dependency.promise, 'fail' );
 
     } );
 

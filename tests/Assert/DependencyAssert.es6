@@ -29,7 +29,7 @@ export default class DependencyAssert {
     static assertFulfilled( dependency, reason = 'fulfil' ) {
 
         expect( dependency.state, `state` ).to.be['true'];
-        expect( dependency.value, `value` ).to.equal( reason );
+        expect( dependency.value, `value` ).to.deep.equal( reason );
 
         expect( dependency._resolvers, `_resolvers` ).to.be.an( 'array' ).that.is.empty;
         expect( dependency._rejectors, `_rejectors` ).to.be.an( 'array' ).that.is.empty;
@@ -44,7 +44,7 @@ export default class DependencyAssert {
     static assertFailed( dependency, reason = 'fail' ) {
 
         expect( dependency.state, `state` ).to.be['false'];
-        expect( dependency.value, `value` ).to.equal( reason );
+        expect( dependency.value, `value` ).to.deep.equal( reason );
 
         expect( dependency._resolvers, `_resolvers` ).to.be.an( 'array' ).that.is.empty;
         expect( dependency._rejectors, `_rejectors` ).to.be.an( 'array' ).that.is.empty;

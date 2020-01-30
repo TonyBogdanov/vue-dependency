@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue/dist/vue.esm';
 import { mount } from '@vue/test-utils';
 
 import RefDependency from '../../../src/Dependency/RefDependency';
@@ -63,19 +62,16 @@ const createAsyncComponent = delay => mount( {
 
 describe( 'RefDependency', () => {
 
-    Vue.config.productionTip = false;
-    Vue.config.devtools = false;
-
     it( 'is initially fulfilled, if ref is synchronous (native)', async () => {
 
         const vm = createSyncNative();
-        const dependency = new RefDependency( 'test', vm, 'ref', 1, 1 );
+        const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
         await Util.tick( vm ); // Wait for view to be stamped.
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
-        await Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
+        Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
 
         vm.$destroy();
 
@@ -84,13 +80,13 @@ describe( 'RefDependency', () => {
     it( 'is initially fulfilled, if ref is synchronous (v-for)', async () => {
 
         const vm = createSyncVFor();
-        const dependency = new RefDependency( 'test', vm, 'ref', 1, 1 );
+        const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
         await Util.tick( vm ); // Wait for view to be stamped.
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref[0] );
-        await Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref[0] );
+        Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref[0] );
 
         vm.$destroy();
 
@@ -99,13 +95,13 @@ describe( 'RefDependency', () => {
     it( 'is initially fulfilled, if ref is synchronous (component)', async () => {
 
         const vm = createSyncComponent();
-        const dependency = new RefDependency( 'test', vm, 'ref', 1, 1 );
+        const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
         await Util.tick( vm ); // Wait for view to be stamped.
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
-        await Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
+        Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
 
         vm.$destroy();
 
@@ -136,7 +132,7 @@ describe( 'RefDependency', () => {
         await Util.sleep( 10 ); // Wait for simulated network activity.
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
-        await Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
+        Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
 
         vm.$destroy();
 

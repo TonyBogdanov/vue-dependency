@@ -5,7 +5,7 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue/dist/vue.esm';
+import { mount } from '@vue/test-utils';
 
 import TickDependency from '../../../src/Dependency/TickDependency';
 import Assert from '../../Assert';
@@ -15,7 +15,7 @@ describe( 'TickDependency', () => {
 
     it( 'is initially pending', async () => {
 
-        const vm = new Vue();
+        const vm = mount( { template: '<div/>' } ).vm;
 
         const dependency = new TickDependency( 'test', vm );
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
@@ -27,7 +27,7 @@ describe( 'TickDependency', () => {
 
     it( 'is fulfilled on vm.$nextTick()', async () => {
 
-        const vm = new Vue();
+        const vm = mount( { template: '<div/>' } ).vm;
 
         const dependency = new TickDependency( 'test', vm );
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
@@ -36,13 +36,13 @@ describe( 'TickDependency', () => {
         await Util.tick( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm );
-        await Assert.Promise.assertResolved( dependency.promise, vm );
+        Assert.Promise.assertResolved( dependency.promise, vm );
 
     } );
 
     it( 'can be fulfilled manually before vm.$nextTick()', async () => {
 
-        const vm = new Vue();
+        const vm = mount( { template: '<div/>' } ).vm;
 
         const dependency = new TickDependency( 'test', vm );
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
@@ -51,7 +51,7 @@ describe( 'TickDependency', () => {
         dependency.fulfil( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm );
-        await Assert.Promise.assertResolved( dependency.promise, vm );
+        Assert.Promise.assertResolved( dependency.promise, vm );
 
     } );
 

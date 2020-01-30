@@ -40,7 +40,7 @@ describe( 'PollDependency', () => {
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
         Assert.Dependency.assertFulfilled( dependency );
-        await Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
+        Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
 
     } );
 
@@ -50,7 +50,7 @@ describe( 'PollDependency', () => {
         await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
         Assert.Dependency.assertFailed( dependency );
-        await Assert.Promise.assertRejected( dependency.promise, 'fail' );
+        Assert.Promise.assertRejected( dependency.promise, 'fail' );
 
     } );
 
@@ -63,7 +63,7 @@ describe( 'PollDependency', () => {
         await Util.sleep( 2 );
 
         Assert.Dependency.assertFulfilled( dependency );
-        await Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
+        Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
 
     } );
 
@@ -76,7 +76,7 @@ describe( 'PollDependency', () => {
         await Util.sleep( 2 );
 
         Assert.Dependency.assertFailed( dependency );
-        await Assert.Promise.assertRejected( dependency.promise, 'fail' );
+        Assert.Promise.assertRejected( dependency.promise, 'fail' );
 
     } );
 
@@ -89,7 +89,7 @@ describe( 'PollDependency', () => {
         dependency.fulfil( 'fulfil' );
 
         Assert.Dependency.assertFulfilled( dependency );
-        await Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
+        Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
 
     } );
 
@@ -102,7 +102,7 @@ describe( 'PollDependency', () => {
         dependency.fail( 'fail' );
 
         Assert.Dependency.assertFailed( dependency );
-        await Assert.Promise.assertRejected( dependency.promise, 'fail' );
+        Assert.Promise.assertRejected( dependency.promise, 'fail' );
 
     } );
 

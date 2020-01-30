@@ -25,32 +25,32 @@ export default class ComponentDependency extends AbstractDependency {
 
     static type = 'component';
 
-    constructor( name, component, ref ) {
+    constructor( name, component, ref, pollInterval = 1, pollLimit = 20000 ) {
 
         super( name, new Promise( ( resolve, reject ) =>
-            new RefDependency( name, component, ref ).promise.then( element => {
+            new RefDependency( name, component, ref, pollInterval, pollLimit ).promise.then( element => {
 
-            if ( element.registered ) {
+                if ( element.registered ) {
 
-                return resolve( element );
-
-            }
-
-            let unwatch;
-            unwatch = element.$watch( 'registered', registered => {
-
-                if ( ! registered ) {
-
-                    return;
+                    return resolve( element );
 
                 }
 
-                unwatch();
-                resolve( element );
+                let unwatch;
+                unwatch = element.$watch( 'registered', registered => {
 
-            } );
+                    if ( ! registered ) {
 
-        }, reject ) ) );
+                        return;
+
+                    }
+
+                    unwatch();
+                    resolve( element );
+
+                }, { immediate: true } );
+
+            }, reject ) ) );
 
     }
 

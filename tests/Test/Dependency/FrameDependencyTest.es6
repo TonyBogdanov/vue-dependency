@@ -30,7 +30,7 @@ describe( 'FrameDependency', () => {
         await Util.frame();
 
         Assert.Dependency.assertFulfilled( dependency, '__raf__' );
-        await Assert.Promise.assertResolved( dependency.promise, '__raf__' );
+        Assert.Promise.assertResolved( dependency.promise, '__raf__' );
 
     } );
 
@@ -43,7 +43,7 @@ describe( 'FrameDependency', () => {
         dependency.fulfil( '__raf__' );
 
         Assert.Dependency.assertFulfilled( dependency, '__raf__' );
-        await Assert.Promise.assertResolved( dependency.promise, '__raf__' );
+        Assert.Promise.assertResolved( dependency.promise, '__raf__' );
 
     } );
 

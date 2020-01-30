@@ -38,13 +38,13 @@ export default class PromiseAssert {
 
     }
 
-    static async assertResolved( promise, value ) {
+    static assertResolved( promise, value ) {
 
         expect( promise ).to.become( value );
 
     }
 
-    static async assertRejected( promise, value ) {
+    static assertRejected( promise, value ) {
 
         expect( promise ).to.be.rejectedWith( value );
 
