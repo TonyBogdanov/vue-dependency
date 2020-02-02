@@ -16,9 +16,9 @@ describe( 'TickDependency', () => {
     it( 'is initially pending', async () => {
 
         const vm = mount( { template: '<div/>' } ).vm;
-
         const dependency = new TickDependency( 'test', vm );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -28,11 +28,9 @@ describe( 'TickDependency', () => {
     it( 'is fulfilled on vm.$nextTick()', async () => {
 
         const vm = mount( { template: '<div/>' } ).vm;
-
         const dependency = new TickDependency( 'test', vm );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Wait for vm.$nextTick().
+        await Promise.resolve();
         await Util.tick( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm );
@@ -43,11 +41,9 @@ describe( 'TickDependency', () => {
     it( 'can be fulfilled manually before vm.$nextTick()', async () => {
 
         const vm = mount( { template: '<div/>' } ).vm;
-
         const dependency = new TickDependency( 'test', vm );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Fulfil manually.
+        await Promise.resolve();
         dependency.fulfil( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm );

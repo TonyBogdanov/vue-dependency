@@ -14,7 +14,8 @@ describe( 'FrameDependency', () => {
     it( 'is initially pending', async () => {
 
         const dependency = new FrameDependency( 'test' );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -24,9 +25,8 @@ describe( 'FrameDependency', () => {
     it( 'is fulfilled on the next frame', async () => {
 
         const dependency = new FrameDependency( 'test' );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Wait for next frame.
+        await Promise.resolve();
         await Util.frame();
 
         Assert.Dependency.assertFulfilled( dependency, '__raf__' );
@@ -37,9 +37,8 @@ describe( 'FrameDependency', () => {
     it( 'can be fulfilled manually before the next frame', async () => {
 
         const dependency = new FrameDependency( 'test' );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Fulfil manually.
+        await Promise.resolve();
         dependency.fulfil( '__raf__' );
 
         Assert.Dependency.assertFulfilled( dependency, '__raf__' );

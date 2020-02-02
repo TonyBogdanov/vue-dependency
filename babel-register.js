@@ -15,6 +15,7 @@ require( '@babel/register' )( {
         path.resolve( __dirname, 'tests' ),
         path.resolve( __dirname, 'node_modules/vue/dist' ),
         path.resolve( __dirname, 'node_modules/data-types-js/src' ),
+        path.resolve( __dirname, 'node_modules/data-expectation/src' ),
 
     ],
 

@@ -41,7 +41,12 @@ export default class RefDependency extends AbstractDependency {
             const element = component.$refs[ ref ];
             return isArray( element ) ? element[0] : element; // $refs cans be an array when in v-for.
 
-        }, false, pollInterval, pollLimit ).promise );
+        }, false, pollInterval, pollLimit ).promise.then(
+
+            dependency => dependency.value,
+            dependency => dependency.value
+
+        ) );
 
     }
 

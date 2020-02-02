@@ -93,10 +93,10 @@ describe( 'ComponentDependency', () => {
         const vm = createSyncComponent( false );
         const dependency = new ComponentDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
-
-        await Promise.resolve(); // Wait another tick, since the dependency executes 2 consecutive promises.
+        await Promise.resolve();
+        await Util.tick( vm );
+        await Promise.resolve();
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -110,10 +110,10 @@ describe( 'ComponentDependency', () => {
         const vm = createSyncComponent( true );
         const dependency = new ComponentDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
-
-        await Promise.resolve(); // Wait another tick, since the dependency executes 2 consecutive promises.
+        await Promise.resolve();
+        await Util.tick( vm );
+        await Promise.resolve();
+        await Promise.resolve();
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
@@ -127,10 +127,10 @@ describe( 'ComponentDependency', () => {
         const vm = createAsyncComponent( false, 1 );
         const dependency = new ComponentDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
-
-        await Promise.resolve(); // Wait another tick, since the dependency executes 2 consecutive promises.
+        await Promise.resolve();
+        await Util.tick( vm );
+        await Promise.resolve();
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -144,11 +144,13 @@ describe( 'ComponentDependency', () => {
         const vm = createSyncComponent( false, 1 );
         const dependency = new ComponentDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
+        await Promise.resolve();
+        await Util.tick( vm );
+        await Promise.resolve();
+        await Promise.resolve();
 
-        await Promise.resolve(); // Wait another tick, since the dependency executes 2 consecutive promises.
-        await Util.sleep( 2 ); // Wait for registration.
+        await Util.sleep( 1 );
+        await Util.tick( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
@@ -162,11 +164,15 @@ describe( 'ComponentDependency', () => {
         const vm = createAsyncComponent( false, 1, 1 );
         const dependency = new ComponentDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
+        await Promise.resolve();
+        await Util.tick( vm );
+        await Promise.resolve();
+        await Promise.resolve();
 
-        await Promise.resolve(); // Wait another tick, since the dependency executes 2 consecutive promises.
-        await Util.sleep( 10 ); // Wait for registration & simulated network activity.
+        await Util.sleep( 1 );
+        await Util.tick( vm );
+
+        await Util.sleep( 10 );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );

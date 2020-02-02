@@ -14,7 +14,8 @@ describe( 'PromiseDependency', () => {
     it( 'is initially pending, if promise is pending', async () => {
 
         const dependency = new PromiseDependency( 'test', Util.sleep( 1 ) );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -24,7 +25,8 @@ describe( 'PromiseDependency', () => {
     it( 'is initially fulfilled, if promise is resolved', async () => {
 
         const dependency = new PromiseDependency( 'test', Promise.resolve( 'fulfil' ) );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertFulfilled( dependency );
         Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
@@ -34,7 +36,8 @@ describe( 'PromiseDependency', () => {
     it( 'is initially failed, if promise is rejected', async () => {
 
         const dependency = new PromiseDependency( 'test', Promise.reject( 'fail' ) );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertFailed( dependency );
         Assert.Promise.assertRejected( dependency.promise, 'fail' );
@@ -44,10 +47,9 @@ describe( 'PromiseDependency', () => {
     it( 'is fulfilled when promise resolves', async () => {
 
         const dependency = new PromiseDependency( 'test', Util.sleep( 1, 'fulfil' ) );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Wait for promise to resolve.
-        await Util.sleep( 2 );
+        await Promise.resolve();
+        await Util.sleep( 1 );
 
         Assert.Dependency.assertFulfilled( dependency );
         Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
@@ -62,10 +64,10 @@ describe( 'PromiseDependency', () => {
             throw 'fail';
 
         } )() );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Wait for promise to reject.
-        await Util.sleep( 2 );
+        await Promise.resolve();
+        await Util.sleep( 1 );
+        await Promise.resolve();
 
         Assert.Dependency.assertFailed( dependency );
         Assert.Promise.assertRejected( dependency.promise, 'fail' );
@@ -75,9 +77,8 @@ describe( 'PromiseDependency', () => {
     it( 'can be fulfilled manually before the promise', async () => {
 
         const dependency = new PromiseDependency( 'test', Util.sleep( 1, 'fulfil' ) );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Fulfil manually.
+        await Promise.resolve();
         dependency.fulfil( 'fulfil' );
 
         Assert.Dependency.assertFulfilled( dependency );
@@ -93,9 +94,8 @@ describe( 'PromiseDependency', () => {
             throw 'fail';
 
         } )() );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Fail manually.
+        await Promise.resolve();
         dependency.fail( 'fail' );
 
         Assert.Dependency.assertFailed( dependency );

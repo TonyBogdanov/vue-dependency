@@ -40,13 +40,13 @@ export default class PromiseAssert {
 
     static assertResolved( promise, value ) {
 
-        expect( promise ).to.become( value );
+        expect( promise ).to.eventually.have.deep.property( 'value', value );
 
     }
 
     static assertRejected( promise, value ) {
 
-        expect( promise ).to.be.rejectedWith( value );
+        expect( promise ).to.be.eventually.rejected.and.have.deep.property( 'value', value );
 
     }
 

@@ -18,7 +18,8 @@ describe( 'AllDependency', () => {
         const manual = new ManualDependency( 'test' );
         const dependency = new AllDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+        await Promise.resolve();
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -30,9 +31,9 @@ describe( 'AllDependency', () => {
         const manual = new ManualDependency( 'test' );
         const dependency = new AllDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        // Wait for the entire dependency chain.
         await Promise.resolve();
         await Util.frame();
+        await Promise.resolve();
         await Promise.resolve();
         await Promise.resolve();
 
@@ -46,9 +47,9 @@ describe( 'AllDependency', () => {
         const manual = new ManualDependency( 'test' ).fulfil( 'fulfil' );
         const dependency = new AllDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        // Wait for the entire dependency chain.
         await Promise.resolve();
         await Util.frame();
+        await Promise.resolve();
         await Promise.resolve();
         await Promise.resolve();
 
@@ -62,7 +63,7 @@ describe( 'AllDependency', () => {
         const manual = new ManualDependency( 'test' ).fail( 'fail' );
         const dependency = new AllDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        // Wait for the active dependency chain.
+        await Promise.resolve();
         await Promise.resolve();
         await Promise.resolve();
 

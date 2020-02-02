@@ -5,6 +5,8 @@
  * file that was distributed with this source code.
  */
 
+import Debug from '../Util/Debug';
+
 /**
  * Provides an abstract base for all types of dependencies.
  * Accepts a promise, the result of which will determine the fulfilment of the dependency.
@@ -16,6 +18,7 @@
  * of failure. While the dependency is pending, the value will be NULL.
  *
  * Call this.promise to retrieve a promise controlled by the dependency (resolved on fulfilment & rejected on failure).
+ * The promise both resolves and rejects with a reference to this dependency instance.
  *
  * You can also use this.fulfilled, this.failed & this.pending as shortcut checks of the state.
  *
@@ -27,13 +30,13 @@ export default class AbstractDependency {
 
         if ( true === this.state ) {
 
-            return Promise.resolve( this.value );
+            return Promise.resolve( this );
 
         }
 
         if ( false === this.state ) {
 
-            return Promise.reject( this.value );
+            return Promise.reject( this );
 
         }
 
@@ -94,10 +97,10 @@ export default class AbstractDependency {
         this.value = value;
 
         /* debug:start */
-        console.debug( 'Fulfilled dependency', this );
+        Debug.debug( 'Dependency fulfilled', this );
         /* debug:end */
 
-        this._resolvers.forEach( resolve => resolve( this.value ) );
+        this._resolvers.forEach( resolve => resolve( this ) );
         return this;
 
     }
@@ -114,10 +117,10 @@ export default class AbstractDependency {
         this.value = value;
 
         /* debug:start */
-        console.debug( 'Failed dependency', this );
+        Debug.debug( 'Dependency failed', this );
         /* debug:end */
 
-        this._rejectors.forEach( reject => reject( this.value ) );
+        this._rejectors.forEach( reject => reject( this ) );
         return this;
 
     }

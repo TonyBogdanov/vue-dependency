@@ -5,6 +5,11 @@
  * file that was distributed with this source code.
  */
 
+import isFunction from 'data-types-js/src/is/isFunction';
+
+import Normalizer from '../Definition/Normalizer';
+import ComponentName from '../Util/ComponentName';
+import Debug from '../Util/Debug';
 import DependencyGraph from '../DependencyGraph';
 
 /**
@@ -16,33 +21,42 @@ export default class Component {
 
         return {
 
-            computed: {
-
-                dependencyGraph() {
-
-                    return new DependencyGraph( this );
-
-                },
-
-                dependencies() {
-
-                    return {};
-
-                },
-
-            },
-
             mounted() {
 
-                // If there are no dependencies at this point, we don't need to proceed any further, as there is no
-                // more time left to register dependencies before the graph is sealed anyway.
-                if ( 0 === Object.values( this.dependencies ).length ) {
+                // Ignore further logic if dependencies aren't defined. Components that rely on the "registered"
+                // lifecycle callback MUST expose dependencies, even if they are empty.
+                if ( 'undefined' === typeof this.dependencies ) {
+
+                    /* vue_dependency_debug:start */
+                    Debug.debug(
+
+                        `Ignoring component %s, as it does not expose any dependencies.`,
+                        ComponentName.get( this )
+
+                    );
+                    /* vue_dependency_debug:end */
 
                     return;
 
                 }
 
-                this.dependencyGraph.registerDependencies( this.dependencies ).invoke();
+                new Normalizer( this ).normalizeDefinitions( this.dependencies ).then(
+
+                    definitions => new DependencyGraph( this ).invoke( definitions ).then(
+
+                        ( [ payload, dependencies ] ) =>
+                            isFunction( this.$options.registered ) &&
+                            this.$options.registered( payload, dependencies ),
+
+                        ( [ dependency, dependencies ] ) =>
+                            isFunction( this.$options.registeredError ) &&
+                            this.$options.registeredError( dependency, dependencies ),
+
+                    )
+
+                    /* vue_dependency_debug:start */ , error => Debug.error( error ) /* vue_dependency_debug:end */
+
+                );
 
             },
 

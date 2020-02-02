@@ -18,19 +18,20 @@ describe( 'AnyDependency', () => {
         const manual = new ManualDependency( 'test' );
         const dependency = new AnyDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+        await Promise.resolve();
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
 
     } );
 
-    it( 'fulfils when when only one dependency fulfils', async () => {
+    it( 'fulfils when only one dependency fulfils', async () => {
 
         const manual = new ManualDependency( 'test' ).fulfil( 'fulfil' );
         const dependency = new AnyDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        // Wait for the active dependency chain.
+        await Promise.resolve();
         await Promise.resolve();
         await Promise.resolve();
 
@@ -44,10 +45,8 @@ describe( 'AnyDependency', () => {
         const manual = new ManualDependency( 'test' ).fulfil( 'fulfil' );
         const dependency = new AnyDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        // Wait for the entire dependency chain.
         await Promise.resolve();
         await Util.frame();
-        await Promise.resolve();
         await Promise.resolve();
 
         Assert.Dependency.assertFulfilled( dependency, 'fulfil' );
@@ -55,12 +54,12 @@ describe( 'AnyDependency', () => {
 
     } );
 
-    it( 'fails when either dependency fails', async () => {
+    it( 'fails when both dependencies fail', async () => {
 
         const manual = new ManualDependency( 'test' ).fail( 'fail' );
         const dependency = new AnyDependency( 'test', manual, new FrameDependency( 'test' ) );
 
-        // Wait for the active dependency chain.
+        await Promise.resolve();
         await Promise.resolve();
         await Promise.resolve();
 

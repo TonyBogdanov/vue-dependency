@@ -67,8 +67,8 @@ describe( 'RefDependency', () => {
         const vm = createSyncNative();
         const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
+        await Promise.resolve();
+        await Util.tick( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
@@ -82,8 +82,8 @@ describe( 'RefDependency', () => {
         const vm = createSyncVFor();
         const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
+        await Promise.resolve();
+        await Util.tick( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref[0] );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref[0] );
@@ -97,8 +97,8 @@ describe( 'RefDependency', () => {
         const vm = createSyncComponent();
         const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
+        await Promise.resolve();
+        await Util.tick( vm );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );
@@ -112,8 +112,8 @@ describe( 'RefDependency', () => {
         const vm = createAsyncComponent( 1 );
         const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
+        await Promise.resolve();
+        await Util.tick( vm );
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -127,9 +127,9 @@ describe( 'RefDependency', () => {
         const vm = createAsyncComponent( 1 );
         const dependency = new RefDependency( 'test', vm, 'ref', 1, 10 );
 
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
-        await Util.tick( vm ); // Wait for view to be stamped.
-        await Util.sleep( 10 ); // Wait for simulated network activity.
+        await Promise.resolve();
+        await Util.tick( vm );
+        await Util.sleep( 10 );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );

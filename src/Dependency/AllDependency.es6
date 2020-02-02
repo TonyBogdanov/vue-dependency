@@ -22,7 +22,12 @@ export default class AllDependency extends AbstractDependency {
 
     constructor( name, ...dependencies ) {
 
-        super( name, Promise.all( dependencies.map( dependency => dependency.promise ) ) );
+        super( name, Promise.all( dependencies.map( dependency => dependency.promise ) ).then(
+
+            dependencies => dependencies.map( dependency => dependency.value ),
+            dependency => { throw dependency.value; }
+
+        ) );
 
     }
 

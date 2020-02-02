@@ -5,6 +5,8 @@
  * file that was distributed with this source code.
  */
 
+import TickDependency from '../src/Dependency/TickDependency';
+
 export default class Util {
 
     /**
@@ -48,6 +50,25 @@ export default class Util {
 
         return new Promise( resolve => vm.$nextTick( 'undefined' === typeof value ?
             resolve : () => resolve( value ) ) );
+
+    }
+
+
+    static async wait( dependency, ...dependencies ) {
+
+        switch ( dependency ) {
+
+            case TickDependency:
+                await Promise.resolve();
+                break;
+
+        }
+
+        if ( 0 < dependencies.length ) {
+
+            return await this.wait( ...dependencies );
+
+        }
 
     }
 

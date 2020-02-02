@@ -27,7 +27,8 @@ describe( 'PollDependency', () => {
     it( 'is initially pending, if poll is falsy', async () => {
 
         const dependency = new PollDependency( 'test', createPoll( 1 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -37,7 +38,8 @@ describe( 'PollDependency', () => {
     it( 'is initially fulfilled, if poll is truthy', async () => {
 
         const dependency = new PollDependency( 'test', createPoll( 0 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertFulfilled( dependency );
         Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
@@ -47,7 +49,8 @@ describe( 'PollDependency', () => {
     it( 'is initially failed, if poll throws an error', async () => {
 
         const dependency = new PollDependency( 'test', createError( 0 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertFailed( dependency );
         Assert.Promise.assertRejected( dependency.promise, 'fail' );
@@ -57,10 +60,9 @@ describe( 'PollDependency', () => {
     it( 'is fulfilled when poll becomes truthy', async () => {
 
         const dependency = new PollDependency( 'test', createPoll( 1 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Wait for poll to become truthy.
-        await Util.sleep( 2 );
+        await Promise.resolve();
+        await Util.sleep( 1 );
 
         Assert.Dependency.assertFulfilled( dependency );
         Assert.Promise.assertResolved( dependency.promise, 'fulfil' );
@@ -70,10 +72,9 @@ describe( 'PollDependency', () => {
     it( 'is failed when poll throws an error', async () => {
 
         const dependency = new PollDependency( 'test', createError( 1 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Wait for poll to throw error.
-        await Util.sleep( 2 );
+        await Promise.resolve();
+        await Util.sleep( 1 );
 
         Assert.Dependency.assertFailed( dependency );
         Assert.Promise.assertRejected( dependency.promise, 'fail' );
@@ -83,9 +84,8 @@ describe( 'PollDependency', () => {
     it( 'can be fulfilled manually before the poll function', async () => {
 
         const dependency = new PollDependency( 'test', createPoll( 1 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Fulfil manually.
+        await Promise.resolve();
         dependency.fulfil( 'fulfil' );
 
         Assert.Dependency.assertFulfilled( dependency );
@@ -96,9 +96,8 @@ describe( 'PollDependency', () => {
     it( 'can be failed manually before the poll function', async () => {
 
         const dependency = new PollDependency( 'test', createError( 1 ), false );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
-        // Fail manually.
+        await Promise.resolve();
         dependency.fail( 'fail' );
 
         Assert.Dependency.assertFailed( dependency );

@@ -14,7 +14,8 @@ describe( 'ManualDependency', () => {
     it( 'is initially pending', async () => {
 
         const dependency = new ManualDependency( 'test' );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
+
+        await Promise.resolve();
 
         Assert.Dependency.assertPending( dependency );
         await Assert.Promise.assertPending( dependency.promise );
@@ -24,9 +25,10 @@ describe( 'ManualDependency', () => {
     it( 'can be fulfilled manually', async () => {
 
         const dependency = new ManualDependency( 'test' );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
+        await Promise.resolve();
         await Util.sleep( 10 );
+
         dependency.fulfil( 'fulfil' );
 
         Assert.Dependency.assertFulfilled( dependency );
@@ -37,9 +39,10 @@ describe( 'ManualDependency', () => {
     it( 'can be failed manually', async () => {
 
         const dependency = new ManualDependency( 'test' );
-        await Promise.resolve(); // Wait one tick, or even immediately resolved promises will be run *after* this line.
 
+        await Promise.resolve();
         await Util.sleep( 10 );
+
         dependency.fail( 'fail' );
 
         Assert.Dependency.assertFailed( dependency );

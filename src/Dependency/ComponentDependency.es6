@@ -27,17 +27,17 @@ export default class ComponentDependency extends AbstractDependency {
 
     constructor( name, component, ref, pollInterval = 1, pollLimit = 20000 ) {
 
-        super( name, new Promise( ( resolve, reject ) =>
-            new RefDependency( name, component, ref, pollInterval, pollLimit ).promise.then( element => {
+        super( name, new Promise( resolve =>
+            new RefDependency( name, component, ref, pollInterval, pollLimit ).promise.then( dependency => {
 
-                if ( element.registered ) {
+                if ( dependency.value.registered ) {
 
-                    return resolve( element );
+                    return resolve( dependency.value );
 
                 }
 
                 let unwatch;
-                unwatch = element.$watch( 'registered', registered => {
+                unwatch = dependency.value.$watch( 'registered', registered => {
 
                     if ( ! registered ) {
 
@@ -46,11 +46,11 @@ export default class ComponentDependency extends AbstractDependency {
                     }
 
                     unwatch();
-                    resolve( element );
+                    resolve( dependency.value );
 
                 }, { immediate: true } );
 
-            }, reject ) ) );
+            } ) ) );
 
     }
 
