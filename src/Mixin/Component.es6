@@ -21,6 +21,16 @@ export default class Component {
 
         return {
 
+            data() {
+
+                return {
+
+                    registered: false,
+
+                };
+
+            },
+
             mounted() {
 
                 // Ignore further logic if dependencies aren't defined. Components that rely on the "registered"
@@ -44,13 +54,27 @@ export default class Component {
 
                     definitions => new DependencyGraph( this ).invoke( definitions ).then(
 
-                        ( [ payload, dependencies ] ) =>
-                            isFunction( this.$options.registered ) &&
-                            this.$options.registered( payload, dependencies ),
+                        ( [ payload, dependencies ] ) => {
 
-                        ( [ dependency, dependencies ] ) =>
-                            isFunction( this.$options.registeredError ) &&
-                            this.$options.registeredError( dependency, dependencies ),
+                            this.registered = payload;
+
+                            if ( isFunction( this.$options.registered ) ) {
+
+                                this.$options.registered( payload, dependencies );
+
+                            }
+
+                        },
+
+                        ( [ dependency, dependencies ] ) => {
+
+                            if ( isFunction( this.$options.registeredError ) ) {
+
+                                this.$options.registeredError( dependency, dependencies );
+
+                            }
+
+                        }
 
                     )
 
