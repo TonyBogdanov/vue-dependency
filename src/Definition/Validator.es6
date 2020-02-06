@@ -25,9 +25,7 @@ import ComponentDependencyValidator from './Validator/ComponentDependencyValidat
 import AnyDependencyValidator from './Validator/AnyDependencyValidator';
 import AllDependencyValidator from './Validator/AllDependencyValidator';
 
-export default class Validator {
-
-    static expectationPostProcessors = [];
+class Validator {
 
     static getStringDefinitionExpectation() {
 
@@ -155,3 +153,7 @@ export default class Validator {
     }
 
 }
+
+Validator.expectationPostProcessors = [];
+
+export default Validator;

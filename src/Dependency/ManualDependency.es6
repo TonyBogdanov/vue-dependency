@@ -14,9 +14,7 @@ import AbstractDependency from './AbstractDependency';
  *
  * This can be useful when it's simpler to call dependency.fulfil() than creating a promise.
  */
-export default class ManualDependency extends AbstractDependency {
-
-    static type = 'manual';
+class ManualDependency extends AbstractDependency {
 
     constructor( name ) {
 
@@ -25,3 +23,7 @@ export default class ManualDependency extends AbstractDependency {
     }
 
 }
+
+ManualDependency.type = 'manual';
+
+export default ManualDependency;

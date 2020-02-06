@@ -23,9 +23,7 @@ import AbstractDependency from './AbstractDependency';
  *
  * NOTE: The specified interval & limit of polls will be-recalculated to never exceed 20 seconds of total polling time.
  */
-export default class PollDependency extends AbstractDependency {
-
-    static type = 'poll';
+class PollDependency extends AbstractDependency {
 
     constructor( name, callback, falsyValue, interval = 1, limit = 20000 ) {
 
@@ -74,3 +72,7 @@ export default class PollDependency extends AbstractDependency {
     }
 
 }
+
+PollDependency.type = 'poll';
+
+export default PollDependency;

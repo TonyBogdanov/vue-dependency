@@ -24,9 +24,7 @@ import PollDependency from './PollDependency';
  * loaded) may have it's own internal dependencies. To ensure the child is both present and ready / registered, use
  * ComponentDependency instead.
  */
-export default class RefDependency extends AbstractDependency {
-
-    static type = 'ref';
+class RefDependency extends AbstractDependency {
 
     constructor( name, component, ref, pollInterval = 1, pollLimit = 20000 ) {
 
@@ -51,3 +49,7 @@ export default class RefDependency extends AbstractDependency {
     }
 
 }
+
+RefDependency.type = 'ref';
+
+export default RefDependency;

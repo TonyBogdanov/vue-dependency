@@ -14,9 +14,7 @@ import AbstractDependency from './AbstractDependency';
  *
  * This can be useful when your dependency relies on the success of a promise.
  */
-export default class PromiseDependency extends AbstractDependency {
-
-    static type = 'promise';
+class PromiseDependency extends AbstractDependency {
 
     constructor( name, promise ) {
 
@@ -25,3 +23,7 @@ export default class PromiseDependency extends AbstractDependency {
     }
 
 }
+
+PromiseDependency.type = 'promise';
+
+export default PromiseDependency;

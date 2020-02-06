@@ -21,9 +21,7 @@ import RefDependency from './RefDependency';
  * components, both synchronous and asynchronous, are loaded, stamped and registered (their respective dependencies
  * are also fulfilled).
  */
-export default class ComponentDependency extends AbstractDependency {
-
-    static type = 'component';
+class ComponentDependency extends AbstractDependency {
 
     constructor( name, component, ref, pollInterval = 1, pollLimit = 20000 ) {
 
@@ -55,3 +53,7 @@ export default class ComponentDependency extends AbstractDependency {
     }
 
 }
+
+ComponentDependency.type = 'component';
+
+export default ComponentDependency;

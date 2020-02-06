@@ -17,9 +17,7 @@ import AbstractDependency from './AbstractDependency';
  * This can be useful when you have multiple dependencies using different methods of waiting for the same thing, so
  * you only care for the very first fulfilment of any of the dependencies.
  */
-export default class AnyDependency extends AbstractDependency {
-
-    static type = 'any';
+class AnyDependency extends AbstractDependency {
 
     constructor( name, ...dependencies ) {
 
@@ -33,3 +31,7 @@ export default class AnyDependency extends AbstractDependency {
     }
 
 }
+
+AnyDependency.type = 'any';
+
+export default AnyDependency;

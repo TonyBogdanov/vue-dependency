@@ -15,9 +15,7 @@ import AbstractDependency from './AbstractDependency';
  *
  * This can be useful when you want to ensure that a single frame has passed since the creation of the dependency.
  */
-export default class FrameDependency extends AbstractDependency {
-
-    static type = 'frame';
+class FrameDependency extends AbstractDependency {
 
     constructor( name ) {
 
@@ -26,3 +24,7 @@ export default class FrameDependency extends AbstractDependency {
     }
 
 }
+
+FrameDependency.type = 'frame';
+
+export default FrameDependency;

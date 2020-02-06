@@ -16,9 +16,7 @@ import AbstractDependency from './AbstractDependency';
  * This can be useful when you want to ensure your component's view including all synchronous child components has
  * been stamped. As per the docs, the mounted() callback is NOT such a guarantee, hence the need for this dependency.
  */
-export default class TickDependency extends AbstractDependency {
-
-    static type = 'tick';
+class TickDependency extends AbstractDependency {
 
     constructor( name, component ) {
 
@@ -27,3 +25,7 @@ export default class TickDependency extends AbstractDependency {
     }
 
 }
+
+TickDependency.type = 'tick';
+
+export default TickDependency;

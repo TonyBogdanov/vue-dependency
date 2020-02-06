@@ -16,9 +16,7 @@ import AbstractDependency from './AbstractDependency';
  *
  * This can be useful when you have multiple dependencies and you need for all of them to be fulfilled.
  */
-export default class AllDependency extends AbstractDependency {
-
-    static type = 'all';
+class AllDependency extends AbstractDependency {
 
     constructor( name, ...dependencies ) {
 
@@ -32,3 +30,7 @@ export default class AllDependency extends AbstractDependency {
     }
 
 }
+
+AllDependency.type = 'all';
+
+export default AllDependency;
