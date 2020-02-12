@@ -12,6 +12,36 @@ import ComponentName from '../Util/ComponentName';
 import Debug from '../Util/Debug';
 import DependencyGraph from '../DependencyGraph';
 
+const callbacks = ( vm, name ) => {
+
+    const result = [];
+
+    if ( isFunction( vm.$options[ name ] ) ) {
+
+        result.push( vm.$options[ name ] );
+
+    }
+
+    if ( ! vm.$options.mixins || 0 === vm.$options.mixins.length ) {
+
+        return result;
+
+    }
+
+    for ( const mixin of vm.$options.mixins ) {
+
+        if ( isFunction( mixin[ name ] ) ) {
+
+            result.push( mixin[ name ] );
+
+        }
+
+    }
+
+    return result;
+
+};
+
 /**
  * Apply mixin by calling Vue.mixin( Component.mixin ).
  */
@@ -58,9 +88,9 @@ export default class Component {
 
                             this.registered = payload;
 
-                            if ( isFunction( this.$options.registered ) ) {
+                            for ( const callback of callbacks( this, 'registered' ) ) {
 
-                                this.$options.registered.call( this, payload, dependencies );
+                                callback.call( this, payload, dependencies );
 
                             }
 
@@ -68,9 +98,9 @@ export default class Component {
 
                         ( [ dependency, dependencies ] ) => {
 
-                            if ( isFunction( this.$options.registeredError ) ) {
+                            for ( const callback of callbacks( this, 'registeredError' ) ) {
 
-                                this.$options.registeredError.call( this, dependency, dependencies );
+                                callback.call( this, dependency, dependencies );
 
                             }
 
