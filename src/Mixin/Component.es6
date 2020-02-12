@@ -60,7 +60,7 @@ export default class Component {
 
                             if ( isFunction( this.$options.registered ) ) {
 
-                                this.$options.registered( payload, dependencies );
+                                this.$options.registered.call( this, payload, dependencies );
 
                             }
 
@@ -70,7 +70,7 @@ export default class Component {
 
                             if ( isFunction( this.$options.registeredError ) ) {
 
-                                this.$options.registeredError( dependency, dependencies );
+                                this.$options.registeredError.call( this, dependency, dependencies );
 
                             }
 
