@@ -90,7 +90,7 @@ export default class Normalizer {
                     return () => new PollDependency( name, this.vm, definition[1] );
 
                 case 'promise':
-                    return () => new PromiseDependency( name, definition[1] );
+                    return () => new PromiseDependency( name, definition[1]() );
 
                 case 'ref':
 
@@ -160,7 +160,7 @@ export default class Normalizer {
                 return () => new PollDependency( name, definition.callback, definition.falsyValue );
 
             case 'promise':
-                return () => new PromiseDependency( name, definition.promise );
+                return () => new PromiseDependency( name, definition.promise() );
 
             case 'ref':
 

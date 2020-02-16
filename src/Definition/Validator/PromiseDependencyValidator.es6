@@ -9,7 +9,7 @@ import AbstractDependencyValidator from './AbstractDependencyValidator';
 import AndExpectation from 'data-expectation/src/Expectation/AndExpectation';
 import NotExpectation from 'data-expectation/src/Expectation/NotExpectation';
 import EmptyExpectation from 'data-expectation/src/Expectation/EmptyExpectation';
-import ClassExpectation from 'data-expectation/src/Expectation/ClassExpectation';
+import FunctionExpectation from 'data-expectation/src/Expectation/FunctionExpectation';
 
 export default class PromiseDependencyValidator extends AbstractDependencyValidator {
 
@@ -18,7 +18,7 @@ export default class PromiseDependencyValidator extends AbstractDependencyValida
         return new AndExpectation(
 
             new NotExpectation( new EmptyExpectation() ),
-            new ClassExpectation( Promise )
+            new FunctionExpectation(),
 
         );
 
