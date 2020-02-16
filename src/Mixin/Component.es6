@@ -30,7 +30,7 @@ const callbacks = ( vm, name ) => {
 
     for ( const mixin of vm.$options.mixins ) {
 
-        if ( isFunction( mixin[ name ] ) ) {
+        if ( isFunction( mixin[ name ] ) && -1 === result.indexOf( mixin[ name ] ) ) {
 
             result.push( mixin[ name ] );
 
