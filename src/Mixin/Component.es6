@@ -16,25 +16,23 @@ const callbacks = ( vm, name ) => {
 
     const result = [];
 
-    if ( isFunction( vm.$options[ name ] ) ) {
+    if ( vm.$options.mixins && 0 < vm.$options.mixins.length ) {
 
-        result.push( vm.$options[ name ] );
+        for ( const mixin of vm.$options.mixins ) {
 
-    }
+            if ( isFunction( mixin[ name ] ) && -1 === result.indexOf( mixin[ name ] ) ) {
 
-    if ( ! vm.$options.mixins || 0 === vm.$options.mixins.length ) {
+                result.push( mixin[ name ] );
 
-        return result;
-
-    }
-
-    for ( const mixin of vm.$options.mixins ) {
-
-        if ( isFunction( mixin[ name ] ) && -1 === result.indexOf( mixin[ name ] ) ) {
-
-            result.push( mixin[ name ] );
+            }
 
         }
+
+    }
+
+    if ( isFunction( vm.$options[ name ] ) && -1 === result.indexOf( vm.$options[ name ] ) ) {
+
+        result.push( vm.$options[ name ] );
 
     }
 
