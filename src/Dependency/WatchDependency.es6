@@ -31,7 +31,7 @@ class WatchDependency extends AbstractDependency {
 
                 }
 
-                Promise.resolve( unwatch );
+                Promise.resolve( () => unwatch() );
                 resolve( value );
 
             }, { immediate: true } );
