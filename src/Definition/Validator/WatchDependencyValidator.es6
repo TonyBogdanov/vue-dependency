@@ -11,20 +11,12 @@ import NotExpectation from 'data-expectation/src/Expectation/NotExpectation';
 import EmptyExpectation from 'data-expectation/src/Expectation/EmptyExpectation';
 import StringExpectation from 'data-expectation/src/Expectation/StringExpectation';
 import AnythingExpectation from 'data-expectation/src/Expectation/AnythingExpectation';
-import ArrayExpectation from 'data-expectation/src/Expectation/ArrayExpectation';
-import AssociativeArrayExpectation from 'data-expectation/src/Expectation/AssociativeArrayExpectation';
 
 export default class WatchDependencyValidator extends AbstractDependencyValidator {
 
     static getComponentExpectation() {
 
-        return new AndExpectation(
-
-            new NotExpectation( new EmptyExpectation() ),
-            new ArrayExpectation(),
-            new AssociativeArrayExpectation()
-
-        );
+        return new AnythingExpectation();
 
     }
 
