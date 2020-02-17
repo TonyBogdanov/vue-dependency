@@ -24,6 +24,7 @@ import FrameDependencyValidator from './Validator/FrameDependencyValidator';
 import ComponentDependencyValidator from './Validator/ComponentDependencyValidator';
 import AnyDependencyValidator from './Validator/AnyDependencyValidator';
 import AllDependencyValidator from './Validator/AllDependencyValidator';
+import WatchDependencyValidator from './Validator/WatchDependencyValidator';
 
 class Validator {
 
@@ -62,7 +63,8 @@ class Validator {
                     ...PollDependencyValidator.getArrayExpectations(),
                     ...PromiseDependencyValidator.getArrayExpectations(),
                     ...RefDependencyValidator.getArrayExpectations(),
-                    ...TickDependencyValidator.getArrayExpectations()
+                    ...TickDependencyValidator.getArrayExpectations(),
+                    ...WatchDependencyValidator.getArrayExpectations()
 
                 )
 
@@ -98,7 +100,8 @@ class Validator {
                     ...PollDependencyValidator.getObjectExpectations(),
                     ...PromiseDependencyValidator.getObjectExpectations(),
                     ...RefDependencyValidator.getObjectExpectations(),
-                    ...TickDependencyValidator.getObjectExpectations()
+                    ...TickDependencyValidator.getObjectExpectations(),
+                    ...WatchDependencyValidator.getObjectExpectations()
 
                 )
 

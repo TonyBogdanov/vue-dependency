@@ -129,7 +129,7 @@ describe( 'RefDependency', () => {
 
         await Promise.resolve();
         await Util.tick( vm );
-        await Util.sleep( 10 );
+        await Util.sleep( 11 );
 
         Assert.Dependency.assertFulfilled( dependency, vm.$refs.ref );
         Assert.Promise.assertResolved( dependency.promise, vm.$refs.ref );

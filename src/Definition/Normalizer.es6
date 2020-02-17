@@ -20,6 +20,7 @@ import PollDependency from '../Dependency/PollDependency';
 import ManualDependency from '../Dependency/ManualDependency';
 import FrameDependency from '../Dependency/FrameDependency';
 import DefinitionMap from './DefinitionMap';
+import WatchDependency from '../Dependency/WatchDependency';
 
 /**
  * Validates and normalizes dependency definition maps into DefinitionMap instances ready for use by the
@@ -109,6 +110,9 @@ export default class Normalizer {
                 case 'tick':
                     return () => new TickDependency( name, this.vm );
 
+                case 'watch':
+                    return () => new WatchDependency( name, definition[0], definition[1], definition[2] );
+
             }
 
         }
@@ -179,6 +183,10 @@ export default class Normalizer {
 
             case 'tick':
                 return () => new TickDependency( name, this.vm );
+
+            case 'watch':
+                return () => new WatchDependency( name, definition.component, definition.property,
+                    definition.falsyValue );
 
         }
 

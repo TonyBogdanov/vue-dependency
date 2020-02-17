@@ -6,10 +6,10 @@
  */
 
 import AnyDependency from '../../../src/Dependency/AnyDependency';
-import Assert from '../../Assert';
 import FrameDependency from '../../../src/Dependency/FrameDependency';
 import ManualDependency from '../../../src/Dependency/ManualDependency';
 import Util from '../../Util';
+import Assert from '../../Assert';
 
 describe( 'AnyDependency', () => {
 
