@@ -111,7 +111,7 @@ export default class Normalizer {
                     return () => new TickDependency( name, this.vm );
 
                 case 'watch':
-                    return () => new WatchDependency( name, definition[0], definition[1], definition[2] );
+                    return () => new WatchDependency( name, definition[1], definition[2], definition[3] );
 
             }
 
