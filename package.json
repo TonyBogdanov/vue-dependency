@@ -1,6 +1,6 @@
 {
   "name": "vue-dependency",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Dependency-based lifecycle for Vue components",
   "main": "index.js",
   "scripts": {
