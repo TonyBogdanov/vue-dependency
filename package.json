@@ -28,7 +28,7 @@
     "chai-as-promised": "^7.1.1",
     "jsdom": "^16.2.2",
     "jsdom-global": "^3.0.2",
-    "mocha": "^7.1.1",
+    "mocha": "^10.2.0",
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
